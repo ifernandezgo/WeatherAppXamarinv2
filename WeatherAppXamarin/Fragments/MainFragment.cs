@@ -6,11 +6,12 @@ using Android.Content.PM;
 using Android.Gms.Location;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
+using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Content;
-using AndroidX.Fragment.App;
 using AndroidX.Navigation;
 using WeatherAppXamarin.Model;
 using WeatherAppXamarin.ViewModel;
@@ -28,6 +29,8 @@ namespace WeatherAppXamarin.Fragments
         {
             base.OnCreate(savedInstanceState);
             fusedLocationProviderClient = LocationServices.GetFusedLocationProviderClient(RequireActivity());
+            var activity = RequireActivity() as AppCompatActivity;
+            activity.SupportActionBar.SetDisplayHomeAsUpEnabled(false);
             getCurrentConditions();
         }
 
@@ -93,23 +96,23 @@ namespace WeatherAppXamarin.Fragments
 
         public void setUI(LocationKey locationKey, WeatherForecast forecast)
         {
-            TextView appTitle = RequireView().FindViewById<TextView>(Resource.Id.appTitle);
+            TextView appTitle = View.FindViewById<TextView>(Resource.Id.appTitle);
             appTitle.Text = locationKey.LocalizedName;
 
-            TextView dateText = RequireView().FindViewById<TextView>(Resource.Id.dateText);
+            TextView dateText = View.FindViewById<TextView>(Resource.Id.dateText);
             dateText.Text = forecast.localObservationDateTime.Split("T")[0];
 
-            TextView weatherText = RequireView().FindViewById<TextView>(Resource.Id.weatherText);
+            TextView weatherText = View.FindViewById<TextView>(Resource.Id.weatherText);
             weatherText.Text = forecast.weatherText;
 
-            TextView temperatureText = RequireView().FindViewById<TextView>(Resource.Id.temperatureText);
+            TextView temperatureText = View.FindViewById<TextView>(Resource.Id.temperatureText);
             temperatureText.Text = forecast.temperature.metric.value.ToString() + " º" + forecast.temperature.metric.unit;
 
-            ImageView weatherImage = RequireView().FindViewById<ImageView>(Resource.Id.weatherImage);
+            ImageView weatherImage = View.FindViewById<ImageView>(Resource.Id.weatherImage);
             int resourceImg = Resources.GetIdentifier("image" + forecast.weatherIcon, "drawable", RequireActivity().PackageName);
             weatherImage.SetImageResource(resourceImg);
 
-            TextView precipitationText = RequireView().FindViewById<TextView>(Resource.Id.precipitationText);
+            TextView precipitationText = View.FindViewById<TextView>(Resource.Id.precipitationText);
             if (forecast.hasPrecipitation)
             {
                 if (forecast.precipitationType != null)

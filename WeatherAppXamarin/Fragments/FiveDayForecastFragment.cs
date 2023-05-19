@@ -5,11 +5,12 @@ using Android;
 using Android.Content.PM;
 using Android.Gms.Location;
 using Android.OS;
+using Android.Support.V4.App;
+using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Content;
-using AndroidX.Fragment.App;
 using AndroidX.RecyclerView.Widget;
 using WeatherAppXamarin.Adapters;
 using WeatherAppXamarin.ViewModel;
@@ -21,22 +22,21 @@ namespace WeatherAppXamarin.Fragments
 
         FusedLocationProviderClient fusedLocationProviderClient;
         RecyclerView rv_forecast;
-        Button back_btn;
 
         public override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
             fusedLocationProviderClient = LocationServices.GetFusedLocationProviderClient(RequireActivity());
+            var activity = RequireActivity() as AppCompatActivity;
+            activity.SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             getCurrentConditions();
         }
 
-		public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			// Use this to return your custom view for this Fragment
 			var view = inflater.Inflate(Resource.Layout.fragment_five_day_forecast, container, false);
             rv_forecast = view.FindViewById<RecyclerView>(Resource.Id.rv_forecast);
-            back_btn = view.FindViewById<Button>(Resource.Id.back_btn);
-            back_btn.Click += backBtnPressed;
             return view;
 		}
 
@@ -80,11 +80,6 @@ namespace WeatherAppXamarin.Fragments
                     Log.Debug("Error", e.Message);
                 }
             }
-        }
-
-        private void backBtnPressed(object sender, EventArgs e)
-        {
-            RequireActivity().SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragmentView, new MainFragment()).Commit();
         }
     }
 }

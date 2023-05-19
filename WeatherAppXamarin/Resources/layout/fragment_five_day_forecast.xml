@@ -7,20 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.FiveDayForecastFragment">
 
-    <Button
-        android:id="@+id/back_btn"
-        android:src ="@drawable/back_button"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="15dp"
-        android:padding="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/back_btn"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

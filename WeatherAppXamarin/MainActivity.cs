@@ -3,17 +3,16 @@ using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using AndroidX.AppCompat.Widget;
-using AndroidX.AppCompat.App;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
-using AndroidX.Fragment.App;
 using WeatherAppXamarin.Fragments;
+using Android.Support.V7.App;
+using Android.Util;
 
 namespace WeatherAppXamarin
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : FragmentActivity
+    public class MainActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -22,6 +21,19 @@ namespace WeatherAppXamarin
             SetContentView(Resource.Layout.activity_main);
             SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragmentView, new MainFragment()).Commit();
         }
-	}
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            Log.Debug("Back", item.ItemId.ToString());
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    SupportFragmentManager.BeginTransaction().Replace(Resource.Id.fragmentView, new MainFragment()).Commit();
+                    break;
+            }
+            return true;
+        }
+
+    }
 }
 
